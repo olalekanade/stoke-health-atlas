@@ -2,6 +2,8 @@
 
 # Stoke-on-Trent Urban Health Atlas
 
+*Geospatial public health dashboard for Stoke-on-Trent — one of England's most deprived cities. Combines 1.2M rows of real NHS prescribing data with ONS deprivation indices and LSOA boundaries to map antidepressant, cardiovascular and respiratory prescribing across 163 neighbourhoods. Built with DuckDB, GeoPandas, XGBoost and Streamlit.*
+
 An interactive public health dashboard combining NHS prescribing data, ONS deprivation indices, and DEFRA air quality sensors across 163 LSOAs in Stoke-on-Trent and Staffordshire.
 
 ## Key findings
