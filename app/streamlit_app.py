@@ -5,7 +5,6 @@ Stoke-on-Trent Urban Health Atlas — Streamlit app
 import json
 from pathlib import Path
 
-import duckdb
 import folium
 import geopandas as gpd
 import pandas as pd
@@ -16,10 +15,10 @@ from streamlit_folium import st_folium
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 ROOT       = Path(__file__).parent.parent
-DB_PATH    = ROOT / "health_atlas.duckdb"
-GPKG_PATH  = ROOT / "data" / "processed" / "stoke_lsoa.gpkg"
-SHAP_BAR   = ROOT / "data" / "processed" / "shap_bar.png"
-SHAP_BSWRM = ROOT / "data" / "processed" / "shap_summary.png"
+PROC       = ROOT / "data" / "processed"
+GPKG_PATH  = PROC / "stoke_lsoa.gpkg"
+SHAP_BAR   = PROC / "shap_bar.png"
+SHAP_BSWRM = PROC / "shap_summary.png"
 
 METRIC_COLS = {
     "items_per_1000":     "items_per_1000",
@@ -46,10 +45,7 @@ st.set_page_config(
 @st.cache_data
 def load_atlas_monthly() -> pd.DataFrame:
     try:
-        db = duckdb.connect(str(DB_PATH), read_only=True)
-        df = db.execute("SELECT * FROM atlas_monthly").df()
-        db.close()
-        return df
+        return pd.read_parquet(PROC / "atlas_monthly.parquet")
     except Exception as e:
         st.info(f"atlas_monthly not available: {e}")
         return pd.DataFrame()
@@ -58,10 +54,7 @@ def load_atlas_monthly() -> pd.DataFrame:
 @st.cache_data
 def load_analysis_quintile() -> pd.DataFrame:
     try:
-        db = duckdb.connect(str(DB_PATH), read_only=True)
-        df = db.execute("SELECT * FROM analysis_quintile").df()
-        db.close()
-        return df
+        return pd.read_parquet(PROC / "analysis_quintile.parquet")
     except Exception as e:
         st.info(f"analysis_quintile not available: {e}")
         return pd.DataFrame()
@@ -70,10 +63,8 @@ def load_analysis_quintile() -> pd.DataFrame:
 @st.cache_data
 def load_gp_practices() -> pd.DataFrame:
     try:
-        db = duckdb.connect(str(DB_PATH), read_only=True)
-        df = db.execute("SELECT organisation_code, name FROM gp_practices ORDER BY name").df()
-        db.close()
-        return df
+        df = pd.read_parquet(PROC / "gp_practices.parquet")
+        return df[["organisation_code", "name"]].sort_values("name")
     except Exception as e:
         st.info(f"gp_practices not available: {e}")
         return pd.DataFrame()

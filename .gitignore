@@ -4,8 +4,6 @@ __pycache__/
 data/raw/
 .env
 *.duckdb
-data/processed/xgb_model.pkl
-data/processed/shap_*.png
 
 # Explicitly keep the LSOA boundary file
 !data/processed/stoke_lsoa.gpkg
