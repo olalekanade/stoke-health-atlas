@@ -1,4 +1,4 @@
-![Streamlit](https://img.shields.io/badge/Streamlit-live-brightgreen) ![License](https://img.shields.io/badge/licence-OGL%20v3-blue)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://stoke-health-atlas.streamlit.app) ![License](https://img.shields.io/badge/licence-OGL%20v3-blue)
 
 # Stoke-on-Trent Urban Health Atlas
 
